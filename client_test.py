@@ -22,9 +22,7 @@ class ClientTest(unittest.TestCase):
     ]
     """ ------------ Add the assertion below ------------ """
     for quote in quotes:
-       # use getRatio
-       data_point = list(getDataPoint(quote))
-       assert(getRatio(data_point[1], data_point[2])) == data_point[1]/data_point[2]
+       self.assertEqual(getDataPoint(quote), (quote['stock'], quote['top_bid']['price'], quote['top_ask']['price'], (quote['top_bid']['price'] + quote['top_ask']['price'])/2))
 
 
   """ ------------ Add more unit tests ------------ """
@@ -37,6 +35,9 @@ class ClientTest(unittest.TestCase):
      for quote in quotes:
         assert(getRatio(quote['top_ask']['size'], quote['top_bid']['size'])) == quote['top_ask']['size']/quote['top_bid']['size']
      
+  def test_getRatio_zero(self):
+     # Check that we get None if price b == 0
+     assert(getRatio(125, 0)) == None
 
 
 
